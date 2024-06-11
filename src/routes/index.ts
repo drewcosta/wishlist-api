@@ -1,3 +1,3 @@
-import wishlistRoutes from "./wishlist";
+import wishlistRoutes from "./wishlist.routes";
 
 export { wishlistRoutes };
