@@ -1,25 +1,15 @@
 require('dotenv').config();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+import mongoose from 'mongoose';
 
 const uri = process.env.ATLAS_URI || "";
 
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-
-async function connectToDB() {
+const connectToDB = async () => {
   try {
-    await client.connect();
-    console.log("Conectado ao MongoDB!");
-    const db = client.db("wishlistdb");
-    return db;
-  } catch (err) {
-    console.error("Erro ao conectar ao MongoDB:", err);
-    throw err;
+    await mongoose.connect(uri);
+    console.log('Conectado ao MongoDB');
+  } catch (error) {
+    console.error('Erro ao conectar ao MongoDB:', error);
+    throw error;
   }
 }
 
