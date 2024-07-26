@@ -1,27 +1,13 @@
-import { HttpStatusError } from "../../error";
-import { IServiceResponse, IWishlistItem } from "../../interfaces";
+import { IWishlistItem } from "../../interfaces";
 import { wishlistRepository } from "../../repositories";
 
-export async function getWishlist(): Promise<IServiceResponse<IWishlistItem[]>> {
-
+export async function getWishlist(): Promise<IWishlistItem[]> {
   try {
     const allItems = await wishlistRepository.findAllItems();
 
-    if (allItems.length === 0) {
-      return {
-        success: true,
-        data: allItems,
-        message: "Nenhum item cadastrado."
-      }
-    }
-
-    return {
-      success: true,
-      data: allItems,
-      message: "Itens capturados com sucesso!"
-    }
+    return allItems;
   } catch (error) {
-    throw new HttpStatusError("Erro ao buscar os itens", 500);
+    throw error;
   }
 }
 
