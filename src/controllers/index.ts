@@ -1,3 +1,3 @@
-import wishlistController from './wishlist.controller';
+import { wishlistController } from './wishlist';
 
 export { wishlistController };

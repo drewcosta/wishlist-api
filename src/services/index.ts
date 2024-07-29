@@ -1,3 +1,3 @@
-import wishlistService from './wishlist.services';
+import { wishlistService } from './wishlist';
 
 export { wishlistService }

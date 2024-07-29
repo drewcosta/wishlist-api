@@ -1,3 +1,3 @@
-import wishlistRepository from "./wishlist.repository";
+import { wishlistRepository } from "./wishlist";
 
 export { wishlistRepository };
