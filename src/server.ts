@@ -1,4 +1,5 @@
 require('dotenv').config();
+import { connectToDB } from "./data/db";
 import { wishlistRoutes } from "./routes";
 
 const cors = require('cors');
@@ -13,6 +14,8 @@ app.use(express.json());
 
 app.use('/api', wishlistRoutes);
 
-app.listen(PORT, () => {
-  console.log(`O servidor está rodando em http://localhost:${PORT}`);
+connectToDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`O servidor está rodando em http://localhost:${PORT}`);
+  });
 });
