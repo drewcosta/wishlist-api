@@ -1,6 +1,6 @@
 require('dotenv').config();
 import { connectToDB } from "./data/db";
-import { wishlistRoutes } from "./routes";
+import { swaggerRoutes, wishlistRoutes } from "./routes";
 
 const cors = require('cors');
 const express = require('express');
@@ -11,7 +11,7 @@ const PORT = process.env.PORT;
 
 app.use(cors());
 app.use(express.json());
-
+app.use(swaggerRoutes);
 app.use('/api', wishlistRoutes);
 
 connectToDB().then(() => {
