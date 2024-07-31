@@ -1,0 +1,474 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Wishlist API Documentation",
+    "description": "Welcome to the Wishlist API Documentation! Here, you will find comprehensive information about the API's endpoints and how to utilize them. Explore the available routes and test their functionality. Ensure a smooth user experience by registering and logging in to access the full spectrum of features.",
+    "contact": {
+      "name": "Andrew Costa",
+      "email": "andrewcosta.contato@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [],
+  "paths": {
+    "/api/wishlist": {
+      "post": {
+        "summary": "Cadastrar item",
+        "description": "Rota responsável por cadastrar um item na lista de desejos.",
+        "tags": [
+          "Wishlist"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WishlistItem"
+              },
+              "examples": {
+                "WishlistItem": {
+                  "value": {
+                    "name": "Tablet",
+                    "price": 1800
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseObject"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "success": true,
+                      "data": {
+                        "name": "teste",
+                        "price": 10,
+                        "_id": "66a97a7efbbc71fd86f13b37",
+                        "__v": 0
+                      },
+                      "message": "Item criado com sucesso!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                },
+                "examples": {
+                  "ValidationError": {
+                    "value": {
+                      "message": "Dados inválidos para cadastro",
+                      "details": {
+                        "formErrors": [],
+                        "fieldErrors": {
+                          "name": [
+                            "Nome é obrigatório"
+                          ],
+                          "price": [
+                            "Preço deve ser um valor positivo"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Resgatar todos os itens.",
+        "description": "Retorna todos os itens da lista de desejos.",
+        "tags": [
+          "Wishlist"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseArray"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "success": true,
+                      "data": [
+                        {
+                          "_id": "66a3f5cf905187019f476e2d",
+                          "name": "Item 1",
+                          "price": 100,
+                          "__v": 0
+                        },
+                        {
+                          "_id": "66a3f5cf905187019f476e2e",
+                          "name": "Item 2",
+                          "price": 200,
+                          "__v": 0
+                        }
+                      ],
+                      "message": "Todos os itens resgatados!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/wishlist/{id}": {
+      "get": {
+        "summary": "Resgatar um item existente",
+        "description": "Resgata um item específico da lista de desejos.",
+        "tags": [
+          "Wishlist"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do item a ser resgatado.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WishlistItem"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "success": true,
+                      "data": {
+                        "_id": "66a3f5cf905187019f476e2d",
+                        "name": "Item 1",
+                        "price": 100,
+                        "__v": 0
+                      },
+                      "message": "Item resgatado com sucesso!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "Errors": {
+                    "value": {
+                      "message": "Item não encontrado!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "Errors": {
+                    "value": {
+                      "message": "Valor inválido do parâmetro 'id'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir um item existente.",
+        "description": "Deleta um item existente da lista de desejos.",
+        "tags": [
+          "Wishlist"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do item a ser excluído.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseNoData"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "success": true,
+                      "message": "Item deletado com sucesso!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "Errors": {
+                    "value": {
+                      "message": "Valor inválido do parâmetro 'id'!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "Errors": {
+                    "value": {
+                      "message": "Item não encontrado!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar um item existente.",
+        "description": "Atualiza um item existente da lista de desejos.",
+        "tags": [
+          "Wishlist"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WishlistItem"
+              },
+              "examples": {
+                "UpdateWishlistItem": {
+                  "value": {
+                    "name": "Notebook",
+                    "price": 4500
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do item a ser atualizado.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseObject"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "success": true,
+                      "data": {
+                        "_id": "1",
+                        "name": "atualizando swagger",
+                        "price": 300,
+                        "__v": 0
+                      },
+                      "message": "Item atualizado com sucesso!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "Errors": {
+                    "value": {
+                      "message": "Item não encontrado!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "WishlistItem": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "ID gerado pelo MongoDB"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "__v": {
+            "type": "number",
+            "description": "Versão do documento no MongoDB"
+          }
+        }
+      },
+      "ResponseArray": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WishlistItem"
+            }
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseObject": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "$ref": "#/components/schemas/WishlistItem"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseNoData": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ErrorMessage": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "ValidationError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "object",
+            "properties": {
+              "formErrors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "fieldErrors": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "message",
+          "details"
+        ]
+      }
+    }
+  }
+}
