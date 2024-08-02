@@ -41,7 +41,7 @@ DELETE /api/wishlist/:id - Apaga um produto existente.
 ## 🗄️ Banco de dados
 O projeto utiliza [MongoDB](https://www.mongodb.com/pt-br) como banco de dados. Classificado como um programa de banco de dados NoSQL, o MongoDB usa documentos semelhantes a JSON com esquemas.
 
-## ⚙️ Installation
+## ⚙️ Instalação
 
 1. Clone o repositório:
 
