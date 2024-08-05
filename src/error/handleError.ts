@@ -1,12 +1,13 @@
 import { Response } from 'express';
 import HttpStatusError from './HttpStatusError';
-import ValidationError from './ValidationError';
+import { ZodError } from 'zod';
 
 export default function handleError(response: Response, error: Error | HttpStatusError, statusCode: number) {
-  if (error instanceof ValidationError) {
-    response.status(error.statusCode).json({
-      message: error.message,
-      details: error.details
+  if (error instanceof ZodError) {
+    const flattenedErrors = error.flatten();
+    response.status(statusCode).json({
+      message: "Dados inválidos!",
+      details: flattenedErrors.fieldErrors
     });
   } else if (error instanceof HttpStatusError) {
     response.status(error.statusCode).json({ message: error.message })
